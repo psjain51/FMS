@@ -1,0 +1,464 @@
+package com.flp.fms.util;
+
+import static org.junit.Assert.*;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+import org.junit.Test;
+
+import com.flp.fms.domain.Actor;
+import com.flp.fms.domain.Film;
+import com.flp.fms.domain.Language;
+import com.flp.fms.service.ActorServiceImpl;
+import com.flp.fms.service.FilmServiceImpl;
+
+
+
+public class Validate {
+
+	ActorServiceImpl service=new ActorServiceImpl();
+
+
+	//TEST CASES FOR ADD ACTOR METHOD
+	//1.Object is null
+	//2.All mandatory fields should be filled
+	//3.duplicate actor entry should not be allowed
+	//4.All entries are valid and non duplicate
+/*
+	@Test
+	public void ActorObjectIsNull() throws ParseException
+	{
+
+		Actor actor=null;
+		assertEquals(service.addActor(null),"Actor object null");
+	}
+
+	@Test
+	public void AllMandatoryActorFieldsAreThere() throws ParseException
+	{
+
+		String strDate = "1990-01-01";
+		DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+
+		java.util.Date date = formatter.parse(strDate);
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		Actor actor=new Actor("Salman","","https://www.google.com",sqlDate);
+		assertEquals(service.addActor(actor),"Some mandatory fields are missing");
+
+	}
+
+	@Test
+	public void NoDuplicateActorEntryAllowed() throws ParseException
+	{
+
+		String strDate = "1990-01-01";
+		DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+
+		java.util.Date date = formatter.parse(strDate);
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		Actor actor=new Actor("ranbir3","kapoor", "http://abc.com",sqlDate);
+		assertEquals(service.addActor(actor),"Duplicate actor entry");
+
+	}
+
+	@Test
+	public void AllEntriesAreValidAndNoDuplicates() throws ParseException
+	{
+
+		String strDate = "1990-02-02";
+		DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+
+		java.util.Date date = formatter.parse(strDate);
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		Actor actor=new Actor("Shrggaddh","Aaarmaniaa","http://abc.com",sqlDate);
+		assertEquals(service.addActor(actor),"Duplicate actor entry");
+
+	}
+    //TEST CASES FOR MODIFY ACTOR METHOD
+    //1.Object should not be null
+    //2.Mandatory fields should be there
+    //3.Successfully updated
+
+    @Test
+    public void NullObjectIsPassedDuringModify() throws Exception
+    {
+
+                    Actor actor=null;
+                    assertEquals(service.modifyActor("","",null),"Actor object null");
+    }
+
+    @Test
+    public void MandatoryFieldsShouldBePresentDuringModification() throws Exception
+    {
+                    String strDate = "1990-02-02";
+                    DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+
+                    java.util.Date date = formatter.parse(strDate);
+                    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                    Actor actor=new Actor("","","http://abc.com",sqlDate);
+
+                    assertEquals(service.modifyActor("Shraddha","Kapoor2",actor),"Some mandatory fields are missing");
+    }
+
+    @Test
+    public void CouldNotSearchTheActorTobeUpdated() throws Exception
+    {
+
+                    String strDate = "1990-02-02";
+                    DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+
+                    java.util.Date date = formatter.parse(strDate);
+                    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                    Actor actor=new Actor("alia","bhatt","http://abc.com",sqlDate);
+
+                    assertEquals(service.modifyActor("S","Kapoor",actor),"S Kapoor not present");
+
+    }
+
+    @Test
+    public void AllFieldsAreValidandSuccessfullyUpdated() throws Exception
+    {
+                    String strDate = "1990-02-02";
+                    DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+
+                    java.util.Date date = formatter.parse(strDate);
+                    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                    Actor actor=new Actor("Arjun","Kapoor2","http://abc.com",sqlDate);
+
+                    assertEquals(service.modifyActor("Shraddha","kapoor2",actor),"Actor successfully updated");
+
+    }*/
+  //TEST CASES FOR SEARCH ACTOR
+  	//1.name not null
+  	//2.should return collection
+  	//3.name must be present
+
+/*
+  	@Test
+  	public void WhenNamePassedIsNull()
+  	{
+  		assertEquals(service.searchActor(null),null);
+  	}
+  	
+  	@Test
+  	public void WhenNameIsNotFound()
+  	{
+  		assertEquals(service.searchActor("rohi"),null);
+  	}
+
+  	@Test
+	public void WhenCollectionIsReturned() throws ParseException
+	{
+
+		String strDate = "1950-01-01";
+		DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+		java.util.Date date = formatter.parse(strDate);
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+		Actor actor=new Actor("Raj","Singh","http://abc.com",sqlDate);
+		actor.setActorId(12);
+
+
+		String strDate2 = "2016-04-08";
+		DateFormat formatter2 = new SimpleDateFormat("yyyy-mm-dd");
+		java.util.Date date2 = formatter.parse(strDate);
+		java.sql.Date sqlDate2 = new java.sql.Date(date.getTime());
+		actor.setCreateDate(sqlDate2);
+
+		String strDate3 = "2016-04-08";
+		DateFormat formatter3 = new SimpleDateFormat("yyyy-mm-dd");
+		java.util.Date date3 = formatter.parse(strDate);
+		java.sql.Date sqlDate3 = new java.sql.Date(date.getTime());
+		actor.setDeleteDate(sqlDate3);
+
+		ArrayList<Actor> actorList=new ArrayList<Actor>();
+		actorList.add(actor);
+
+
+		assertEquals((service.searchActor("Raj").get(0).getActorId()),11);
+	}
+
+	//TEST CASES FOR ADD FILM
+			//1.Film object should not be null
+			//2.All mandatory film fields should be there
+			//3.When length of the movie is lesser than 10 and greater than 200 minutes
+			//4.When duplicate film entry is present
+			//5.When valid film entries are present and film successfully added
+			FilmServiceImpl  serviceFilm=new FilmServiceImpl();
+/*
+			@Test
+			public void WhenFilmObjectIsNull()
+			{
+
+				assertEquals(serviceFilm.AddFilm(null),"Film object null");
+			}
+
+
+			@Test
+			public void WhenAnyOfTheFilmMandatoryFieldIsNotGiven()
+			{
+
+				Film film=new Film("","hiiiiii","1999-09-12",30,3,null);
+
+				assertEquals(serviceFilm.AddFilm(film),"Some mandatory fields are missing or Length is invalid");
+			}
+
+			@Test
+			public void WhenLengthOfMovieIsLesserThan10AndGreaterThan200()
+			{
+				Language lang=new Language("Punjabi");
+				Film film=new Film("hello","hiiiiii","1999-09-12",9,3,lang);
+
+				assertEquals(serviceFilm.AddFilm(film),"Some mandatory fields are missing or Length is invalid");
+			}
+			*/
+			
+/*			@Test
+			public void WhenFilmEntriesAreValidAndNonDuplicateAndHenceSuccessfullyAdded()
+			{
+				Language lang=new Language("Hindi");
+				Film film=new Film("ted1","cutertt","2016",160,4,lang);
+				assertEquals(serviceFilm.AddFilm(film),"Film added");
+
+			}
+
+		
+
+			@Test
+			public void WhenFilmDuplicateEntryIsFilled()
+			{
+				Language lang=new Language("Punjabi");
+				Film film=new Film("ted2","cutert","2016",170,3,lang);
+				assertEquals(serviceFilm.AddFilm(film),"Duplicate entry present");
+
+			}
+			
+	//Film Test Updation
+    //1.When film object is null
+    //2.Mandatory fields should be there
+	//FilmServiceImpl  serviceFilm=new FilmServiceImpl();
+    
+    
+    
+    
+    @Test
+    public void WhenNullObjectIsPassedDuringModifyFilm() throws Exception
+    {
+
+           Film film=null;
+           assertEquals(serviceFilm.modifyFilm("","",null),"Film object null");
+    }
+
+
+    
+    @Test
+    public void WhenMandatoryFieldsAreNOTPresentDuringfilmModification() throws Exception
+    {
+           
+           Language lang=new Language("Hindi");
+           Film film=new Film("","Farhan akhtar","2016",160,4,lang);
+
+           assertEquals(serviceFilm.modifyFilm("opop","puiu",film),"Some mandatory fields are missing or Length is invalid");
+    }
+    
+    
+    /*
+    @Test
+    public void CouldNotSearchTheFILMTobeUpdated() throws Exception
+    {
+
+           Language lang=new Language("Hindi");
+           Film film=new Film("Rock ON!","farhan akhtar","2016",180,3,lang);
+
+           assertEquals(serviceFilm.modifyFilm("punjab 84","2016",film),"Film not present");
+
+    }
+    
+  
+    @Test
+    public void AllFieldsAreValidandFILMMMSuccessfullyUpdated() throws Exception
+    {
+           
+           Language lang=new Language("Hindi");
+                        Film film=new Film("Teddy","A Cute talking teddy bear","2016",180,4,lang);
+
+           assertEquals(serviceFilm.modifyFilm("ted2","2016",film),"Film successfully updated");
+                        
+                        
+
+    }*/
+
+	
+	//TEST CASES FOR SEARCH FILM
+	
+	//TEST CASES FOR SEARCH FILM BY TITLE
+	//1.Film object not found during search film by title
+	//2.Film title not found
+	//3.Film Successfully searched by title
+	//FilmServiceImpl  serviceFilm=new FilmServiceImpl();
+	
+  /*  
+    @Test
+	public void WhenFilmObjectDuringSearchingByTitleIsNull()
+	{
+		
+		assertEquals(serviceFilm.searchFILMByTitle(null),null);
+	}
+	
+	@Test
+	public void WhenFilmObjectIsNotNullButFilmTitleNotFound()
+	{
+		assertEquals(serviceFilm.searchFILMByTitle("ambarsgc"),null);
+	}
+	
+	@Test
+	public void WhenFilmTitleIsSuccessfullySearched()
+	{
+		
+		assertEquals(serviceFilm.searchFILMByTitle("ambar").get(0).getFilmId(),3);
+		
+	}
+	
+	
+	//TEST CASES FOR SEARCH FILM BY RELEASE YEAR
+		//1.Film object not found during search film by release year
+		//2.Film release year not found
+		//3.Film Successfully searched by release year
+	//FilmServiceImpl  serviceFilm=new FilmServiceImpl();
+
+	@Test
+	public void WhenFilmObjectDuringSearchingByReleaseYearIsNull()
+	{
+		
+		assertEquals(serviceFilm.searchFILMByReleaseYear(null),null);
+	}
+	
+	@Test
+	public void WhenFilmObjectIsNotNullButFilmReleaseYearNotFound()
+	{
+		assertEquals(serviceFilm.searchFILMByReleaseYear("2001"),null);
+	}
+	
+	@Test
+	public void WhenFilmReleaseYearIsSuccessfullySearched()
+	{
+		
+		assertEquals(serviceFilm.searchFILMByReleaseYear("2016").size(),5);
+		
+	}
+	
+	//TEST CASES FOR SEARCH BY RATING
+	//1. FILM object null
+	//2.Film rating not found
+	//3.Film Successfully found by rating
+	
+	/*
+
+	@Test
+	public void WhenFilmObjectDuringSearchingByRatingIsNull()
+	{
+		
+		assertEquals(serviceFilm.searchFILMByRating(0),null);
+		
+	}
+	
+	@Test
+	public void WhenFilmObjectIsNotNullButFilmRatingrNotFound()
+	{
+		assertEquals(serviceFilm.searchFILMByRating(1),null);
+	}
+	*/
+	
+	FilmServiceImpl  serviceFilm=new FilmServiceImpl();
+	@Test
+	public void WhenFilmRatingIsSuccessfullySearched()
+	{
+		
+		assertEquals(serviceFilm.searchFILMByRating(2).size(),1);
+		
+	
+	
+	}
+	
+}
+	//TEST CASES FOR SEARCH BY LANGUAGE\
+	//1. Film object NULL 
+	//2. Film language Not Found
+	//3. Film Searched Successfully By Language
+	
+	
+	/*
+	@Test
+	public void WhenFilmObjectDuringSearchingByLANGUAGE()
+	{
+		
+		assertEquals(serviceFilm.searchFILMByLanguage("null"),null);
+		
+	}
+	
+	@Test
+	public void WhenFilmObjectIsNotNullButFilmLANGUAGENotFound()
+	{
+		assertEquals(serviceFilm.searchFILMByLanguage("PERSIAN"),null);
+	}
+	
+	@Test
+	public void WhenFilmLANGUAGEIsSuccessfullySearched()
+	{
+		
+		assertEquals(serviceFilm.searchFILMByLanguage("Hindi").size(),1);
+		
+	
+	
+	}
+}
+	//TEST CASES FOR SEARCH FILM BY ACTOR
+		//1.Film object not found during search film by actor
+		//2.Film actor not found
+		//3.Film Successfully searched by actor
+/*
+		@Test
+		public void WhenActorPassedIsNullDuringSearcFilmByActor()
+		{
+			assertEquals(serviceFilm.searchByActor(null),null);
+		}
+
+		@Test
+		public void WhenActorPassedIsNotNullButCorrespondingFilmIsNotSearched()
+		{
+			assertEquals(serviceFilm.searchByActor("balu"),null);
+		}
+
+		@Test
+		public void WhenActorPassedIsValidAndFilmIsSuccessfullySearched()
+		{
+			assertEquals(serviceFilm.searchByActor("Shahrukh").size(),1);
+		}
+
+		//TEST CASES FOR SEARCH FILM BY CATEGORY	
+		//1.Film object not found during search film by category
+		//2.Film category not found
+		//3.Film Successfully searched by category
+
+		@Test
+		public void WhenCategoryPassedIsNullDuringSearcFilmByCategory()
+		{
+			assertEquals(serviceFilm.searchByCategory(null),null);
+		}
+
+		@Test
+		public void WhenCategoryPassedIsNotNullButCorrespondingFilmIsNotSearched()
+		{
+			assertEquals(serviceFilm.searchByCategory("FICTION"),null);
+		}
+
+		FilmServiceImpl  serviceFilm=new FilmServiceImpl();
+		@Test
+		public void WhenCategoryPassedIsValidAndFilmIsSuccessfullySearched()
+		{
+			assertEquals(serviceFilm.searchByCategory("comedy").size(),1);
+		}
+}*/
